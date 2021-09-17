@@ -6,13 +6,22 @@
 
 .movie-image {
   width: 100%;
-  height: 300px;
+  height: 360px;
   overflow: hidden;
+  background-size: 120%;
+  background-position: center;
+  transition: background-size 1s;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+}
+
+.movie-image:hover {
+  background-size: 140%;
 }
 
 .img-loading {
   background: rgb(240, 240, 240);
-  animation: loadingImage 2s infinite;
+  animation: loadingImage 1.6s infinite;
 }
 
 @keyframes loadingImage {
@@ -21,20 +30,6 @@
   }
 }
 
-
 .object-fit-contain {
-  object-fit: contain;
-}
-
-.img-loaded {
-  animation: imageLoaded 1s;
-}
-
-@keyframes imageLoaded {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  object-fit: cover;
 }
