@@ -2,4 +2,4 @@
 
 Search A Movie (SAM) Web App.
 
-The Live Site: https://github.com/0x41-li/sam/.
+The Live Site: https://0x41-li.github.io/sam/.
