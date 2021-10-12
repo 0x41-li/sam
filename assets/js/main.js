@@ -1,4 +1,5 @@
 let top250movies = null;
+let leftMovies = null;
 let moviesResult = document.querySelector(".movies-result-row");
 let loadMoreBtn = document.getElementById("load-more-btn");
 let modal = new bootstrap.Modal(document.getElementById("movie-modal"), {
@@ -8,6 +9,8 @@ let modal = new bootstrap.Modal(document.getElementById("movie-modal"), {
 let modalTitle = document.getElementById("modal-title");
 let modalBody = document.getElementById("modal-body");
 
+let searchForm = document.getElementById('search-form');
+let searchInput = document.getElementById('search-input');
 
 fetch("test-api.json")
   .then((response) => {
@@ -15,7 +18,8 @@ fetch("test-api.json")
   })
   .then((data) => {
     top250movies = data.items;
-    showMovies();
+    leftMovies = data.items;
+    showMovies(null, leftMovies);
   })
   .catch((err) => {
     console.error(err);
@@ -53,8 +57,13 @@ function movieModal(movie) {
 }
 
 // show movies on the page
-function showMovies() {
-  top250movies.forEach((movie, key) => {
+function showMovies(e, moviesArray) {
+  if(moviesArray === null || moviesArray === undefined) {
+    moviesArray = top250movies;
+  } else {
+    moviesResult.innerHTML = "";
+  }
+  moviesArray.forEach((movie, key) => {
     if (key < 10) {
       //create a div
       let movieCol = document.createElement("div");
@@ -101,6 +110,26 @@ function showMovies() {
   });
 
   for (let i = 0; i < 10; i++) {
-    top250movies.shift();
+    leftMovies.shift();
+  }
+}
+
+
+// search func
+
+searchForm.addEventListener("submit", searchFormSubmitted);
+
+function searchFormSubmitted(e) {
+  let moviesResult = [];
+  e.preventDefault();
+  if(searchInput.value === "") {
+    return;
+  } else {
+    top250movies.forEach((movie) => {
+      if(movie.fullTitle.includes(searchInput.value)) {
+        moviesResult.push(movie);
+      }
+    });
+    showMovies(null, moviesResult);
   }
 }
